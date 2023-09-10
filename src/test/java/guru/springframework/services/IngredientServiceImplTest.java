@@ -7,7 +7,6 @@ import guru.springframework.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
-import guru.springframework.repositories.IngredientRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import org.junit.Before;
@@ -30,9 +29,6 @@ public class IngredientServiceImplTest {
     RecipeRepository recipeRepository;
 
     @Mock
-    IngredientRepository ingredientRepository;
-
-    @Mock
     UnitOfMeasureRepository unitOfMeasureRepository;
 
     IngredientService ingredientService;
@@ -48,7 +44,7 @@ public class IngredientServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient,
-                recipeRepository, unitOfMeasureRepository, ingredientRepository);
+                recipeRepository, unitOfMeasureRepository);
     }
 
     @Test
@@ -116,12 +112,20 @@ public class IngredientServiceImplTest {
     @Test
     public void testDeleteById() throws Exception {
         //given
-        Long idToDelete = Long.valueOf(2L);
+        Recipe recipe = new Recipe();
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(3L);
+        recipe.addIngredient(ingredient);
+        ingredient.setRecipe(recipe);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
 
         //when
-        ingredientService.deleteById(idToDelete);
+        ingredientService.deleteById(1L, 3L);
 
         //then
-        verify(ingredientRepository, times(1)).deleteById(anyLong());
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).save(any(Recipe.class));
     }
 }
