@@ -106,6 +106,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         //Yummy Guac
         Recipe guacRecipe = new Recipe();
+        guacRecipe.setServings(4);
+        guacRecipe.setSource("Simply Recipes");
+        guacRecipe.setUrl("http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4jvoun5ws");
         guacRecipe.setDescription("Perfect Guacamole");
         guacRecipe.setPrepTime(10);
         guacRecipe.setCookTime(0);
@@ -152,6 +155,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         //Yummy Tacos
         Recipe tacosRecipe = new Recipe();
+        tacosRecipe.setServings(5);
+        tacosRecipe.setSource("Simply Recipes");
+        tacosRecipe.setUrl("http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz4jvtrAnNm");
         tacosRecipe.setDescription("Spicy Grilled Chicken Taco");
         tacosRecipe.setCookTime(9);
         tacosRecipe.setPrepTime(20);
